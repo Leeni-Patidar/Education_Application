@@ -19,14 +19,16 @@ export const createCourse =async(req , res)=>{
         }
 
         let imageUrl =""
-        
-        const base64 = `data:${req.file.mimetype};base64,${thumbnail.buffer.toString("base64")}`;
 
-        const uploadRes = await cloudinary.uploader.upload(base64,{
-            folder:"lmsYT"
-        })
+        if (thumbnail) {
+            const base64 = `data:${thumbnail.mimetype};base64,${thumbnail.buffer.toString("base64")}`;
 
-        imageUrl = uploadRes.secure_url
+            const uploadRes = await cloudinary.uploader.upload(base64,{
+                folder:"lmsYT"
+            })
+
+            imageUrl = uploadRes.secure_url
+        }
 
         const newCourse = new Course({
             userId:req.user._id,
@@ -146,10 +148,18 @@ export const getSingleCourse=async(req,res)=>{
 export const getPurchasedCourse = async(req,res)=>{
     try {
         const courseId = req.params.id;
+        const userId = req.user._id;
 
         if(!courseId){
             return res.status(401).json({
                 message:"course not found"
+            })
+        }
+
+        const user = await User.findById(userId);
+        if(!user.purchasedCourse.includes(courseId)){
+            return res.status(403).json({
+                message:"You have not purchased this course"
             })
         }
 

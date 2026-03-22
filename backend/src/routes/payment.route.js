@@ -1,12 +1,11 @@
 import express from "express";
 import { protectRoute } from "../middleware/auth.middleware.js";
-import { checkoutSuccess, createCheckOutSession } from "../controllers/payment.controller.js";
+import { confirmPurchase } from "../controllers/payment.controller.js";
 
 
 const paymentRoute = express.Router()
 
-paymentRoute.post('/checkout', protectRoute, createCheckOutSession)
-paymentRoute.post('/checkout-success', protectRoute, checkoutSuccess)
+paymentRoute.post('/confirm-purchase', protectRoute, confirmPurchase)
 
 
 export default paymentRoute

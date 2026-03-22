@@ -1,29 +1,18 @@
 import { Course } from "../models/course.model.js";
 import { Modules } from "../models/module.model.js";
-import {Comment} from '../models/comment.model.js'
 export const createModule = async(req,res)=>{
     try {
-        const {courseId,  title}= req.body;
-        if(!courseId || !title){
+        const {courseId,  title, content}= req.body;
+        if(!courseId || !title || !content){
             return res.status(401).json({
                 message:"Please provide all the details"
             })
         }
 
-        if(!req.file){
-            return res.status(401).json({
-                message:"Please provide video"
-            })
-        }
-
-        const videoUrl = req.file.path
-        const publicId = req.file.filename
-
         const module = await Modules.create({
             courseId,
             title,
-            video:videoUrl,
-            videoPublicUrl :publicId
+            content
         })
         module.save()
 
@@ -56,36 +45,17 @@ export const getSingleCourseModule = async(req,res)=>{
             })
         }
 
+        // Check if user has purchased the course
+        const courseId = singleModule.courseId;
+        if (!req.user.purchasedCourse.includes(courseId)) {
+            return res.status(403).json({
+                message: "You must purchase this course to access modules"
+            })
+        }
+
         return res.status(201).json(singleModule)
     } catch (error) {
         console.log(error ,"from get single course module")
     }
 }
 
-
-export const getComment =async(req,res)=>{
-    try {
-        const moduleId = req.params.id;
-
-        if(!moduleId){
-            return res.status(401).json({
-                message:"Please provide module Id"
-            })
-        }
-
-
-        const moduleComment = await Modules.findById(moduleId).populate({
-            path:'comments',
-            populate:{
-                path:'userId',
-                select:'fullName email'
-            },
-
-            options:{sort:{createdAt:-1}}
-        })
-
-        return res.status(201).json(moduleComment.comments)
-    } catch (error) {
-        console.log(error , "from get comment")
-    }
-}

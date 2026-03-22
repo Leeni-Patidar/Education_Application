@@ -8,8 +8,8 @@ const orderSchema  = new mongoose.Schema({
     },
     course:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Course"
-
+        ref:"Course",
+        required: true
     },
 
     totalAmount:{
@@ -19,7 +19,7 @@ const orderSchema  = new mongoose.Schema({
 
     stripeSessionId:{
         type:String,
-        unique:true
+        sparse: true  // Allow multiple null values
     }
 },{timestamps:true})
 

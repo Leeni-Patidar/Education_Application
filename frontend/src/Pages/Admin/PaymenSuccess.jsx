@@ -1,30 +1,8 @@
-import { useCheckoutSuccess } from '@/hooks/payment.hook'
-import React, { useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { CheckCircle, ArrowRight, Home } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 
 const PaymenSuccess = () => {
-  const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
-  const { mutate, isSuccess } = useCheckoutSuccess()
-
-  useEffect(() => {
-    const sessionId = searchParams.get('session_id')
-    if (sessionId) {
-      mutate(sessionId)
-    }
-  }, [searchParams, mutate])
-
-  useEffect(() => {
-    if (isSuccess) {
-      const timer = setTimeout(() => {
-        navigate('/dashboard')
-      }, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [isSuccess, navigate])
-
   return (
     <div className='min-h-screen bg-gradient-to-br from-emerald-50 to-green-50 flex items-center justify-center px-6 py-12'>
       <div className='max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-12 text-center border border-emerald-200'>
@@ -48,23 +26,26 @@ const PaymenSuccess = () => {
           <div className='bg-blue-50 border-2 border-blue-200 rounded-2xl p-6'>
             <div className='flex items-center justify-center gap-3 text-blue-700'>
               <ArrowRight className='w-6 h-6' />
-              <span className='font-semibold'>Redirecting to dashboard in 5s...</span>
+              <span className='font-semibold'>Access your course modules now</span>
             </div>
           </div>
         </div>
         
-        <div className='flex gap-4 justify-center'>
-          <Link to='/dashboard'>
-            <button className='flex items-center gap-2 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200'>
-              Go to Dashboard
-            </button>
+        <div className='flex flex-col sm:flex-row gap-4 justify-center'>
+          <Link
+            to='/dashboard'
+            className='inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-600 text-white font-semibold rounded-2xl hover:bg-emerald-700 transition-all shadow-lg hover:shadow-xl'
+          >
+            <Home className='w-5 h-5' />
+            Go to Dashboard
           </Link>
           
-          <Link to='/'>
-            <button className='flex items-center gap-2 px-8 py-4 border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200'>
-              <Home className='w-5 h-5' />
-              Back to Home
-            </button>
+          <Link
+            to='/YourCourse'
+            className='inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-2xl hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl'
+          >
+            <ArrowRight className='w-5 h-5' />
+            View Your Courses
           </Link>
         </div>
       </div>

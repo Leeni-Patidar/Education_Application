@@ -6,12 +6,12 @@ const moduleSchema = new mongoose.Schema({
         ref:"Course"
     },
 
-    video:{
+    title:{
         type:String,
         required:true
     },
 
-    title:{
+    content:{
         type:String,
         required:true
     },
@@ -21,12 +21,7 @@ const moduleSchema = new mongoose.Schema({
         ref:"Quiz"
     },
 
-    comments:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"Comment"
-        }
-    ]
+
 },{timestamps:true})
 
 

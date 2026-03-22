@@ -17,12 +17,13 @@ const CreateModule = () => {
   const { mutate, isPending } = useCreateModule()
 
   const moduleFormHandler = (data) => {
-    const formData = new FormData()
-    formData.append('title', data.title)
-    formData.append('video', data.video[0])
-    formData.append('courseId', id)
+    const payload = {
+      title: data.title,
+      content: data.content,
+      courseId: id
+    }
 
-    mutate(formData, {
+    mutate(payload, {
       onSuccess: () => {
         setOpenModule(false)
         reset()
@@ -64,12 +65,11 @@ const CreateModule = () => {
               </div>
               
               <div>
-                <label className='block text-sm font-semibold text-slate-700 mb-2'>Video File</label>
-                <input 
-                  type="file" 
-                  accept='video/*' 
-                  className='w-full px-4 py-3 border-2 border-slate-200 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-all cursor-pointer' 
-                  {...register('video', { required: true })}
+                <label className='block text-sm font-semibold text-slate-700 mb-2'>Lesson Content</label>
+                <textarea 
+                  placeholder='Enter lesson content/notes'  
+                  className='w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 focus:outline-none transition-all resize-vertical min-h-[120px]' 
+                  {...register('content', { required: true })}
                 />
               </div>
               
