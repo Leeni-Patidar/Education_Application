@@ -13,6 +13,7 @@ spec:
       maxUnavailable: 1
       maxSurge: 1
   template:
+
     metadata:
       labels:
         app: education
