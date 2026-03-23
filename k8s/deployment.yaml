@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: education-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: education
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: education
+    spec:
+      containers:
+        - name: frontend
+          image: education-app-frontend
+          imagePullPolicy: Never   # 🔥 IMPORTANT LINE ADDED
+          ports:
+            - containerPort: 80
