@@ -21,11 +21,11 @@ const Navbar = () => {
   }
 
   const navItems = [
-    {
+    ...(user?.admin ? [{
       label: 'Dashboard',
       icon: LayoutDashboard,
       onClick: () => navigate('/dashboard')
-    },
+    }] : []),
     {
       label: 'Profile',
       icon: User,

@@ -14,6 +14,7 @@ import CreateModule from '@/Pages/Admin/CreateModule'
 import Quiz from '@/Pages/User/Quiz'
 import Cancel from '@/Pages/Admin/Cancel'
 import PaymenSuccess from '@/Pages/Admin/PaymenSuccess'
+import Profile from '@/Pages/User/Profile'
 
 const MainRoutes = () => {
   return (
@@ -52,6 +53,12 @@ const MainRoutes = () => {
     <Route path='/quiz/:id' element={
         <ProtectedRoutes>
             <Quiz/>
+        </ProtectedRoutes>
+    }/>
+
+    <Route path='/profile' element={
+        <ProtectedRoutes>
+            <Profile/>
         </ProtectedRoutes>
     }/>
 

@@ -9,12 +9,7 @@ const SearchResult = ({
   hasActiveSearch 
 }) => {
 
-  const SearchText = [
-    'MERN Stack Development', 
-    'React for Beginners', 
-    'Advanced JavaScript', 
-    'Node.js Essentials'
-  ]
+ 
 
   return (
     <div className='min-h-[28vh] bg-zinc-100 border-b border-zinc-200 flex items-center'>
@@ -59,20 +54,7 @@ const SearchResult = ({
           </button>
         </form>
 
-        {/* Quick Tags */}
-        <div className='flex flex-wrap justify-center gap-3'>
-          {SearchText.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => setSearchInput(item)}
-              className='px-4 py-2 bg-zinc-200 hover:bg-zinc-300 
-              border border-zinc-300 rounded-lg text-sm font-medium 
-              text-zinc-800 transition-colors'
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+
 
         {/* Reset */}
         {hasActiveSearch && (

@@ -50,3 +50,16 @@ export const logoutApi = async()=>{
     )
     return res.data
 }
+
+export const updateProfileApi = async(formData)=>{
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/updateProfile`,
+        formData,
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            withCredentials:true
+        }
+    )
+    return res.data
+}
