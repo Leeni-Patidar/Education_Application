@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: education-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: education-backend
+  template:
+    metadata:
+      labels:
+        app: education-backend
+    spec:
+      containers:
+        - name: backend
+          image: leeni004/education-app-backend:v1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
