@@ -23,7 +23,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-app.use('/api', userRoute)
+app.use('/api/user', userRoute)
 app.use('/api/course', courseRoute)
 app.use('/api/module', moduleRoute)
 app.use('/api/quiz', quizRoute)

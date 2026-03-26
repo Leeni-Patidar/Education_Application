@@ -14,7 +14,7 @@ export const createModuleApi = async(payload)=>{
 
 
 export const getModuleApi = async(id)=>{
-    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/module/getModuel/${id}`,
+    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/module/getModule/${id}`,
          {
             headers:{'Content-Type':'Application/json'},
             withCredentials:true
@@ -23,5 +23,3 @@ export const getModuleApi = async(id)=>{
 
     return res.data
 }
-
-
