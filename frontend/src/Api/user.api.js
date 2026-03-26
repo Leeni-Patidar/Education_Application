@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const registerApi = async(payload)=>{
-    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/register`,
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`,
         payload,
         {
             headers: {
@@ -16,10 +16,10 @@ export const registerApi = async(payload)=>{
 
 
 export const loginApi = async(payload)=>{
-    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/login`,
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`,
         payload,
         {
-            headers:'Application/json',
+            headers: { 'Content-Type': 'application/json' },
             withCredentials:true
         }
     )
@@ -28,10 +28,10 @@ export const loginApi = async(payload)=>{
 }
 
 export const getUser = async()=>{
-    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/getUser`,
+    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/getUser`,
         
         {
-            headers:'Application/json',
+            headers: { 'Content-Type': 'application/json' },
             withCredentials:true
         }
     )
@@ -41,10 +41,10 @@ export const getUser = async()=>{
 
 
 export const logoutApi = async()=>{
-    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/logout`,
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/logout`,
         {},
          {
-            headers:'Application/json',
+            headers: { 'Content-Type': 'application/json' },
             withCredentials:true
         }
     )
@@ -52,7 +52,7 @@ export const logoutApi = async()=>{
 }
 
 export const updateProfileApi = async(formData)=>{
-    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/updateProfile`,
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/updateProfile`,
         formData,
         {
             headers: {
