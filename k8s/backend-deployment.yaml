@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: education-backend
+  labels:
+    app: education-backend
 spec:
   replicas: 1
   selector:
@@ -18,5 +20,49 @@ spec:
           ports:
             - containerPort: 5000
           env:
+            # Non-sensitive environment variables
             - name: PORT
               value: "5000"
+            - name: CLIENT_URL
+              value: "http://127.0.0.1:30007"
+            # Sensitive environment variables from Kubernetes Secrets
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: MONGO_URI
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: JWT_SECRET
+            - name: ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: ADMIN
+            - name: Admin_Password
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: Admin_Password
+            - name: CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: CLOUD_NAME
+            - name: CLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: CLOUD_API_KEY
+            - name: CLOUD_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: CLOUD_API_SECRET
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: GEMINI_API_KEY
