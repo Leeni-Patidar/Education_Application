@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: :leeni004/education-app-frontend:latest
+          image: leeni004/education-app-frontend:latest
           imagePullPolicy: Always   # 🔥 IMPORTANT LINE ADDED
           ports:
             - containerPort: 80
