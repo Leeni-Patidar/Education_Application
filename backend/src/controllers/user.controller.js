@@ -4,6 +4,20 @@ import jwt from 'jsonwebtoken'
 import { ENV } from "../config/env.js";
 import cloudinary from "../config/cloudinary.js";
 
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000
+
+const getCookieOptions = (req) => {
+    const isHttpsRequest =
+        req.secure || req.headers["x-forwarded-proto"] === "https";
+
+    return {
+        maxAge: ONE_DAY_IN_MS,
+        httpOnly: true,
+        secure: isHttpsRequest,
+        sameSite: isHttpsRequest ? "none" : "lax",
+        path: "/",
+    };
+};
 
 
 export const Register = async(req ,res)=>{
@@ -35,15 +49,16 @@ export const Register = async(req ,res)=>{
         })
 
         const token = await jwt.sign({userId:newUser._id},ENV.JWT_SECRET )
+        const cookieOptions = getCookieOptions(req)
 
         if(newUser.email === ENV.ADMIN){
-            return res.status(201).cookie("token", token, {maxAge:1*24*60*60*1000, httpOnly:true, secure:true, sameSite:"none"}).json({
+            return res.status(201).cookie("token", token, cookieOptions).json({
                 message:`welcome back admin ${newUser.fullName}`,
                 
             })
         }
 
-        return res.status(201).cookie("token", token, {maxAge:1*24*60*60*1000, httpOnly:true, secure:true, sameSite:"none"}).json({
+        return res.status(201).cookie("token", token, cookieOptions).json({
                 message:`welcome back  ${newUser.fullName}`
             })
 
@@ -86,13 +101,9 @@ export const Login = async(req,res)=>{
         }
 
         const token = await jwt.sign({userId:user._id},ENV.JWT_SECRET )
+        const cookieOptions = getCookieOptions(req)
 
-        res.cookie("token",token,{
-            maxAge:1*24*60*60*1000,
-            httpOnly:true,
-            secure:true,
-            sameSite:"none"
-        })
+        res.cookie("token", token, cookieOptions)
 
         if(user.admin){
             return res.status(201).json({
@@ -135,7 +146,10 @@ export const getUser = async(req,res)=>{
 
 export const logout=async(req,res)=>{
     try {
-        return res.cookie("token","").status(201).json({
+        return res.clearCookie("token", {
+            ...getCookieOptions(req),
+            maxAge: undefined,
+        }).status(201).json({
             message:"User logged out"
         })
     } catch (error) {
